@@ -25,8 +25,7 @@ $std_id=$_SESSION['user'];
 	 <head>
 	  <meta charset="utf-8">
 	  <meta name="viewport" content="width=device-width, initial-scale=1">
-	   <link rel="stylesheet" href="bootstrap.min.css">
-	 
+	    <link rel="stylesheet" href="bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="styles.css"/>
 	<style>
 .dropbtn {
@@ -79,7 +78,6 @@ $std_id=$_SESSION['user'];
   					<button class="dropbtn">My Account</button>
   						<div class="dropdown-content">
     					<a href="logout.php?logout">&nbsp;Log Out</a>
-    					<a href="#">Change Password</a>
   						</div>
 							</div>
 				</div>

@@ -81,7 +81,6 @@
   					<button class="dropbtn">My Account</button>
   						<div class="dropdown-content">
     					<a href="logout.php?logout">&nbsp;Log Out</a>
-    					<a href="#">Change Password</a>
   						</div>
 							</div>
 				</div>
@@ -98,9 +97,9 @@
 
 							<img src="img/unlocked.png" height="280px" width="260px">
 							<div class="button_space">
-							<form method="POST" action="my_locker.php" >
+							<!--<form method="POST" action="my_locker.php" >
 							<button class="button button1" name="locker" value="1">Occupy</button>
-							</form>
+							</form>-->
 						</div>
 						<?php	}	?>
 					<?php	if ($lockquery['Locker_num']==1 && $lockquery['flag']==1){ ?>
@@ -119,9 +118,9 @@
 
 							<img src="img/unlocked2.png" height="280px" width="260px">
 							<div class="button_space">
-							<form method="post" action="my_locker.php" >
+							<!--<form method="post" action="my_locker.php" >
 							<button class="button button1" name="locker" value="2">Occupy</button>
-							</form>
+							</form>-->
 						</div>
 						<?php	}	?>
 					<?php	if ($lockquery2['Locker_num']==2 && $lockquery2['flag']==1){ ?>
@@ -139,9 +138,9 @@
 
 							<img src="img/unlocked3.png" height="280px" width="260px">
 							<div class="button_space">
-							<form method="post" action="my_locker.php" >
+							<!--<form method="post" action="my_locker.php" >
 							<button class="button button1" name="locker" value="3">Occupy</button>
-							</form>
+							</form>-->
 						</div>
 						<?php	}	?>
 					<?php	if ($lockquery3['Locker_num']==3 && $lockquery3['flag']==1){ ?>
@@ -159,9 +158,9 @@
 
 							<img src="img/unlocked4.png" height="280px" width="260px">
 							<div class="button_space">
-							<form method="post" action="my_locker.php" >
+							<!--<form method="post" action="my_locker.php" >
 							<button class="button button1" name="locker" value="4">Occupy</button>
-							</form>
+							</form>-->
 						</div>
 						<?php	}	?>
 					<?php	if ($lockquery4['Locker_num']==4 && $lockquery4['flag']==1){ ?>

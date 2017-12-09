@@ -44,7 +44,6 @@
 					<button class="dropbtn">My Account</button>
 					<div class="dropdown-content">
 						<a href="logout.php?logout">&nbsp;Log Out</a>
-						<a href="#">Change Password</a>
 					</div>
 				</div>
 			</div>
