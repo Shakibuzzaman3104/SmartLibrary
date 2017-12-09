@@ -23,7 +23,6 @@ $userRow=mysqli_fetch_array($res);
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="styles.css"/>
-	<script src="jquery-3.2.1.min.js" type="text/javascript"></script>
 	<title>Welcome - <?php echo $userRow['admin_id']; ?></title>
 	</head>
 
