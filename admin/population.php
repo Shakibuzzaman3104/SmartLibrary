@@ -54,7 +54,11 @@ $userRow=mysqli_fetch_array($res);
 					Floor: <a href="floor.php">1</a>
 					</div>
 					<div class="split_h2">
-						Total Student
+						Total Student: <?php
+						$std=mysqli_query($conn,"SELECT count(*)FROM current_std Where floor_num=1");
+						$std2=mysqli_fetch_array($std);
+						print $std2[0];
+						?>
 					</div>
 					<div class="split_h3">
 						Total Seat: 18
@@ -63,9 +67,18 @@ $userRow=mysqli_fetch_array($res);
 						Available Seat:
 						<?php
 						 	$total=18;
-						    $res=mysqli_query($conn,"SELECT SUM(occupied) AS occ FROM booking_table WHERE floor_num=1");
-							$fin=mysqli_fetch_array($res);	
-							print $total-$fin[0];
+						    $res=mysqli_query($conn,"SELECT SUM(occupy) AS occ FROM book_table WHERE floor_num=1 AND occupy=0");
+							$fin=mysqli_fetch_array($res);
+							$sum=$std2[0]+$fin[0];
+							$seat=$total-$std2[0];
+							if($seat<1)
+							{
+								print "0";
+							}
+							else
+							{
+								print $seat;
+							}	
 						?>
 					</div>
 					</center>
@@ -102,7 +115,11 @@ $userRow=mysqli_fetch_array($res);
 					Floor: <a href="floor.php">2</a>
 					</div>
 					<div class="split_h2">
-						Total Student
+						Total Student: <?php
+						$std=mysqli_query($conn,"SELECT count(*)FROM current_std Where floor_num=2");
+						$std2=mysqli_fetch_array($std);
+						print $std2[0];
+						?>
 					</div>
 					<div class="split_h3">
 						Total Seat: 18
@@ -111,9 +128,18 @@ $userRow=mysqli_fetch_array($res);
 						Available Seat:
 						<?php
 						 	$total=18;
-						    $res=mysqli_query($conn,"SELECT SUM(occupied) AS occ FROM booking_table WHERE floor_num=2");
-							$fin=mysqli_fetch_array($res);	
-							print $total-$fin[0];
+						    $res=mysqli_query($conn,"SELECT SUM(occupy) AS occ FROM book_table WHERE floor_num=2 AND occupy=0");
+							$fin=mysqli_fetch_array($res);
+							$sum=$std2[0]+$fin[0];
+							$seat=$total-$std2[0];
+							if($seat<1)
+							{
+								print "0";
+							}
+							else
+							{
+								print $seat;
+							}	
 						?>
 					</div>
 					</center>
@@ -149,7 +175,11 @@ $userRow=mysqli_fetch_array($res);
 					Floor: <a href="floor.php">3</a>
 					</div>
 					<div class="split_h2">
-						Total Student
+						Total Student: <?php
+						$std=mysqli_query($conn,"SELECT count(*)FROM current_std Where floor_num=3");
+						$std2=mysqli_fetch_array($std);
+						print $std2[0];
+						?>
 					</div>
 					<div class="split_h3">
 						Total Seat: 18
@@ -158,9 +188,18 @@ $userRow=mysqli_fetch_array($res);
 						Available Seat:
 						<?php
 						 	$total=18;
-						    $res=mysqli_query($conn,"SELECT SUM(occupied) AS occ FROM booking_table WHERE floor_num=3");
-							$fin=mysqli_fetch_array($res);	
-							print $total-$fin[0];
+						    $res=mysqli_query($conn,"SELECT SUM(occupy) AS occ FROM book_table WHERE floor_num=3 AND occupy=0");
+							$fin=mysqli_fetch_array($res);
+							$sum=$std2[0]+$fin[0];
+							$seat=$total-$std2[0];
+							if($seat<1)
+							{
+								print "0";
+							}
+							else
+							{
+								print $seat;
+							}	
 						?>
 					</div>
 					</center>

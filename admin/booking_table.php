@@ -16,14 +16,11 @@ $userRow=mysqli_fetch_array($res);
 
 <html>
 
-
-
-
-	 <head>
+	<head>
 	  <meta charset="utf-8">
 	  <meta name="viewport" content="width=device-width, initial-scale=1">
 	  <link rel="stylesheet" href="bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="styles.css"/>
+	  <link rel="stylesheet" type="text/css" href="styles.css"/>
 	<title>Welcome - <?php echo $userRow['admin_id']; ?></title>
 	</head>
 
@@ -36,9 +33,9 @@ $userRow=mysqli_fetch_array($res);
 			</div>
 			<div class="nav">                                       <!-- Start of navition -->
 				<a href="index.php" ><input class="button button3" type="button" value="Home"></a>
-				<a href="occupied.php" ><input class="button button3" type="button" value="Locker State"></a>
+				<a href="occupied.php" ><input class="button button3" type="button" value="Locker state"></a>
 				<a href="population.php" ><input class="button button3" type="button" value="Population"></a>
-				<a href="booking_table.php" ><input class="button button10" type="button" value="Booking Table" disabled></a>
+				<a href="booking_table.php" ><input class="button button3" type="button" value="Booking table"></a>
 			</div>
 		  <div class="container_body"> 
 
@@ -57,16 +54,19 @@ $userRow=mysqli_fetch_array($res);
 				</div>
 				<div class="split2">
 				<?php
-				
-								$result = mysqli_query($conn,"SELECT table_num,St_id FROM book_table where floor_num=1");
+								$result = mysqli_query($conn,"SELECT * FROM book_table WHERE floor_num=1");
 								echo "<table>";
 								echo "<tr>";
-								echo "<th>Table Number</th>";
 								echo "<th>Student ID</th>";
+								echo "<th>Table Number</th>";
+								echo "<th>Seat Number</th>";
 								echo "</tr>";
 								while ($row = mysqli_fetch_array($result)) {
-										echo "<tr><td>".$row['table_num']."</td>";
-										echo "<td>".$row['St_id']."</td></tr>";
+										echo "<tr><td>".$row['St_id']."</td>";
+										echo "<td>".$row['table_num']."</td>";
+										echo "<td>".$row['SeatNum']."</td>";
+										echo "</tr>";
+
 								}
 								echo "</table>"
 								?>
@@ -87,15 +87,19 @@ $userRow=mysqli_fetch_array($res);
 				</div>
 				<div class="split2">
 				<?php
-								$result = mysqli_query($conn,"SELECT table_num,St_id FROM book_table where floor_num=2");
+								$result = mysqli_query($conn,"SELECT * FROM book_table WHERE floor_num=2");
 								echo "<table>";
 								echo "<tr>";
-								echo "<th>Table Number</th>";
 								echo "<th>Student ID</th>";
+								echo "<th>Table Number</th>";
+								echo "<th>Seat Number</th>";
 								echo "</tr>";
 								while ($row = mysqli_fetch_array($result)) {
-										echo "<tr><td>".$row['table_num']."</td>";
-										echo "<td>".$row['St_id']."</td></tr>";
+										echo "<tr><td>".$row['St_id']."</td>";
+										echo "<td>".$row['table_num']."</td>";
+										echo "<td>".$row['SeatNum']."</td>";
+										echo "</tr>";
+
 								}
 								echo "</table>"
 								?>
@@ -114,15 +118,19 @@ $userRow=mysqli_fetch_array($res);
 				</div>
 				<div class="split2">
 				<?php
-								$result = mysqli_query($conn,"SELECT table_num,St_id FROM book_table where floor_num=3");
+								$result = mysqli_query($conn,"SELECT * FROM book_table WHERE floor_num=3");
 								echo "<table>";
 								echo "<tr>";
-								echo "<th>Table Number</th>";
 								echo "<th>Student ID</th>";
+								echo "<th>Table Number</th>";
+								echo "<th>Seat Number</th>";
 								echo "</tr>";
 								while ($row = mysqli_fetch_array($result)) {
-										echo "<tr><td>".$row['table_num']."</td>";
-										echo "<td>".$row['St_id']."</td></tr>";
+										echo "<tr><td>".$row['St_id']."</td>";
+										echo "<td>".$row['table_num']."</td>";
+										echo "<td>".$row['SeatNum']."</td>";
+										echo "</tr>";
+
 								}
 								echo "</table>"
 								?>

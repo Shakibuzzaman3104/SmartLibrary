@@ -21,13 +21,47 @@ div.details{
 	margin-top:30px;
 	margin-bottom:20px;
 	border-radius:8px;
-	color:white;
-	font-size:35px;
-	padding-left:8px;
-	padding-bottom:6px;
-	text-align:center;
 	width:100%;
+
 }
+
+div.details1
+{
+	height:50px;
+	width:24%;
+	color:white;
+	float:left;
+	font-size:30px;
+	text-align:center;
+}
+div.details2
+{
+	height:50px;
+	width:24%;
+	color:white;
+	font-size:30px;
+	float:left;
+	text-align:center;
+}
+div.details3
+{
+	height:50px;
+	width:24%;
+	color:white;
+	font-size:30px;
+	float:left;
+	text-align:center;
+}
+div.details4
+{
+	height:50px;
+	width:24%;
+	color:white;
+	float:right;
+	font-size:30px;
+	text-align:center;
+}
+
 
 div.Footer{
 	width:100%;
@@ -385,3 +419,4 @@ input[type="radio"]:checked + label span {
 .dropdown:hover .dropbtn {
     background-color: #3e8e41;
 }
+

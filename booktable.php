@@ -56,7 +56,30 @@
 		</div>
 		<div class="container_body">
 			<div class="upper">
-				<div class="details"><h1>Floor No: 1</h1></div>
+				<div class="details">
+					<div class="details1">Floor: 1</div>
+					<div class="details2">Total Student: <?php
+						$std=mysqli_query($conn,"SELECT count(*)FROM current_std Where floor_num=1");
+						$std2=mysqli_fetch_array($std);
+						print $std2[0];
+						?></div>
+					<div class="details3">Total Seat: 18</div>
+					<div class="details4">Available Seat:<?php
+						 	$total=18;
+						    $res=mysqli_query($conn,"SELECT SUM(occupy) AS occ FROM book_table WHERE floor_num=1 AND occupy=0");
+							$fin=mysqli_fetch_array($res);
+							$sum=$std2[0]+$fin[0];
+							$seat=$total-$std2[0];
+							if($seat<1)
+							{
+								print "0";
+							}
+							else
+							{
+								print $seat;
+							}	
+						?> </div>
+				</div>
 				<div class="upper_left">
 					<div class="det">
 						<div class="det1">Table No:1</div>
@@ -878,7 +901,30 @@
 
 
 			<div class="upper">
-				<div class="details"><h1>Floor No: 2</h1></div>
+				<div class="details">
+					<div class="details1">Floor: 2</div>
+					<div class="details2">Total Student: <?php
+						$std=mysqli_query($conn,"SELECT count(*)FROM current_std Where floor_num=2");
+						$std2=mysqli_fetch_array($std);
+						print $std2[0];
+						?></div>
+					<div class="details3">Total Seat: 18</div>
+					<div class="details4">Available Seat:<?php
+						 	$total=18;
+						    $res=mysqli_query($conn,"SELECT SUM(occupy) AS occ FROM book_table WHERE floor_num=2 AND occupy=0");
+							$fin=mysqli_fetch_array($res);
+							$sum=$std2[0]+$fin[0];
+							$seat=$total-$std2[0];
+							if($seat<1)
+							{
+								print "0";
+							}
+							else
+							{
+								print $seat;
+							}	
+						?> </div>
+				</div>
 				<div class="upper_left">
 					<div class="det">
 						<div class="det1">Table No:1</div>
@@ -1686,7 +1732,30 @@
 			</div>
 
 			<div class="upper">
-				<div class="details"><h1>Floor No: 3</h1></div>
+				<div class="details">
+					<div class="details1">Floor: 3</div>
+					<div class="details2">Total Student: <?php
+						$std=mysqli_query($conn,"SELECT count(*)FROM current_std Where floor_num=3");
+						$std2=mysqli_fetch_array($std);
+						print $std2[0];
+						?></div>
+					<div class="details3">Total Seat: 18</div>
+					<div class="details4">Available Seat:<?php
+						 	$total=18;
+						    $res=mysqli_query($conn,"SELECT SUM(occupy) AS occ FROM book_table WHERE floor_num=3 AND occupy=0");
+							$fin=mysqli_fetch_array($res);
+							$sum=$std2[0]+$fin[0];
+							$seat=$total-$std2[0];
+							if($seat<1)
+							{
+								print "0";
+							}
+							else
+							{
+								print $seat;
+							}	
+						?> </div>
+				</div>
 				<div class="upper_left">
 					<div class="det">
 						<div class="det1">Table No:1</div>

@@ -90,6 +90,7 @@
 				<a href="home.php"><input class="button button10"  type="button" value="Home" disabled></a>
 				<a href="my_locker.php"><input class="button button3"  type="button" value="My Locker"></a>
 				<a href="booktable.php"><input class="button button3" type="button" value="Book Table"></a>
+				<a href="myseat.php"><input class="button button3" type="button" value="My Seat"></a>
 			</div>
 		  <div class="container_body"> 							    <!--Start of container for body-->
 			<div class="upper"> 							        <!--Start of upper div-->

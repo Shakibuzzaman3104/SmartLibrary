@@ -54,17 +54,17 @@ $userRow=mysqli_fetch_array($res);
 				</div>
 				<div class="split2">
 				<?php
-								$result = mysqli_query($conn,"SELECT * FROM book_table WHERE floor_num=1");
+								$result = mysqli_query($conn,"SELECT * FROM current_std,student Where current_std.floor_num=1 AND current_std.St_id=student.St_id");
 								echo "<table>";
 								echo "<tr>";
 								echo "<th>Student ID</th>";
-								echo "<th>Table Number</th>";
-								echo "<th>Seat Number</th>";
+								echo "<th>Student Name</th>";
+								echo "<th>Department</th>";
 								echo "</tr>";
 								while ($row = mysqli_fetch_array($result)) {
 										echo "<tr><td>".$row['St_id']."</td>";
-										echo "<td>".$row['table_num']."</td>";
-										echo "<td>".$row['SeatNum']."</td>";
+										echo "<td>".$row['St_name']."</td>";
+										echo "<td>".$row['St_dept']."</td>";
 										echo "</tr>";
 
 								}
