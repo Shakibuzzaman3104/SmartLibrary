@@ -44,6 +44,7 @@ $std_id=$_SESSION['user'];
 			</div>
 				<div class="nav">
 				<a href="home.php"><input class="button button3"  type="button" value="Home" ></a>
+				<a href="locker.php"><input class="button button3"  type="button" value="Locker"></a>
 				<a href="my_locker.php"><input class="button button10"  type="button" value="My Locker" disabled></a>
 				<a href="booktable.php"><input class="button button3" type="button" value="Book Table"></a>
 			</div>

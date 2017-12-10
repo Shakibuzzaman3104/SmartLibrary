@@ -33,6 +33,7 @@ $userRow=mysqli_fetch_array($res);
 			</div>
 			<div class="nav">                                       <!-- Start of navition -->
 				<a href="index.php" ><input class="button button3" type="button" value="Home"></a>
+				<a href="locker2.php"><input class="button button3"  type="button" value="Locker"></a>
 				<a href="occupied.php" ><input class="button button3" type="button" value="Locker state"></a>
 				<a href="population.php" ><input class="button button3" type="button" value="Population"></a>
 				<a href="booking_table.php" ><input class="button button3" type="button" value="Booking table"></a>
