@@ -17,10 +17,11 @@
 <html>
 
 <head>
- 	  <meta charset="utf-8">
-	  <meta name="viewport" content="width=device-width, initial-scale=1">
-	  <link rel="stylesheet" href="bootstrap.min.css">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="styleb.css"/>
+	<link href="popup/elements.css" rel="stylesheet">
 	<title>Welcome -
 		<?php echo $userRow['St_id']; ?>
 	</title>
@@ -28,8 +29,82 @@
 
 <body>
 
+
+	<?php
+	$v = $_POST[ 'book' ];
+	?>
+	<script>
+		
+		/*$("#book").on("click", function() {
+    	passData();
+			});*/
+			function passData() {
+				document.getElementById( 'abc' ).style.display = "block";
+				var name = document.getElementById( "book" ).value;
+				var dataString=name;
+					$.ajax( {
+						type: "POST",
+						url: "booktable.php",
+						data: dataString,
+						success:{}
+					} );
+			 
+				}
+		function div_hide() { document.getElementById( 'abc' ).style.display = "none";
+			
+	</script>
+	
+	<div id="abc">
+		<!-- Popup Div Starts Here -->
+		<div id="popupContact">
+			<!-- Contact Us Form -->
+			<form class="form-check-inline" action="myseat.php" method="post" id="forms" align="center">
+
+				Select time to book:<br>
+				<label><b><?php echo $v;?>Time</b></label>
+				<select name="hour" id="hour">
+					<option value="8">08</option>
+					<option value="9">09</option>
+					<option value="10">10</option>
+					<option value="11">11</option>
+					<option value="12">12</option>
+					<option value="13">13</option>
+					<option value="14">14</option>
+					<option value="15">15</option>
+					<option value="16">16</option>
+					<option value="17">17</option>
+					<option value="18">18</option>
+					<option value="19">19</option>
+					<option value="20">20</option>
+				</select>
+				<label><b>:</b></label>
+				<select name="min" id="min">
+					<option value="00">00</option>
+					<option value="05">05</option>
+					<option value="10">10</option>
+					<option value="15">15</option>
+					<option value="20">20</option>
+					<option value="25">25</option>
+					<option value="30">30</option>
+					<option value="35">35</option>
+					<option value="40">40</option>
+					<option value="45">45</option>
+					<option value="50">50</option>
+					<option value="55">55</option>
+					<option value="60">60</option>
+				</select>
+				<span style="display: inline;">
+  <button type="submit" name="submit" id="submit" value="">submit</button>
+  <button name="cancel" id="submit" formaction="booktable.php">cancel</button>
+  </span>
+			
+			</form>
+		</div>
+		<!-- Popup Div Ends Here -->
+	</div>
+
 	<div class="container">
-	<?php 
+		<?php 
 		$check=0;
 		$r1=mysqli_query($conn,"select * from book_table where St_id=".$userRow['St_id']);
 		$r2=mysqli_fetch_array($r1);
@@ -49,35 +124,35 @@
 			</div>
 		</div>
 		<div class="nav">
-				<a href="home.php"><input class="button button3"  type="button" value="Home"></a>
-				<a href="locker.php"><input class="button button3"  type="button" value="Locker"></a>
-				<a href="my_locker.php"><input class="button button3"  type="button" value="My Locker"></a>
-				<a href="booktable.php"><input class="button button10" type="button" value="Book Table" disabled></a>
+			<a href="home.php"><input class="button button3"  type="button" value="Home"></a>
+			<a href="locker.php"><input class="button button3"  type="button" value="Locker"></a>
+			<a href="my_locker.php"><input class="button button3"  type="button" value="My Locker"></a>
+			<a href="booktable.php"><input class="button button10" type="button" value="Book Table" disabled></a>
 		</div>
 		<div class="container_body">
 			<div class="upper">
 				<div class="details">
 					<div class="details1">Floor: 1</div>
-					<div class="details2">Total Student: <?php
-						$std=mysqli_query($conn,"SELECT count(*)FROM current_std Where floor_num=1");
-						$std2=mysqli_fetch_array($std);
-						print $std2[0];
-						?></div>
+					<div class="details2">Total Student:
+						<?php
+						$std = mysqli_query( $conn, "SELECT count(*)FROM current_std Where floor_num=1" );
+						$std2 = mysqli_fetch_array( $std );
+						print $std2[ 0 ];
+						?>
+					</div>
 					<div class="details3">Total Seat: 18</div>
-					<div class="details4">Available Seat:<?php
-						 	$total=18;
-						    $res=mysqli_query($conn,"SELECT SUM(occupy) AS occ FROM book_table WHERE floor_num=1 AND occupy=0");
-							$fin=mysqli_fetch_array($res);
-							$sum=$std2[0]+$fin[0];
-							$seat=$total-$std2[0];
-							if($seat<1)
-							{
-								print "0";
-							}
-							else
-							{
-								print $seat;
-							}	
+					<div class="details4">Available Seat:
+						<?php
+						$total = 18;
+						$res = mysqli_query( $conn, "SELECT SUM(occupy) AS occ FROM book_table WHERE floor_num=1 AND occupy=0" );
+						$fin = mysqli_fetch_array( $res );
+						$sum = $std2[ 0 ] + $fin[ 0 ];
+						$seat = $total - $std2[ 0 ];
+						if ( $seat < 1 ) {
+							print "0";
+						} else {
+							print $seat;
+						}
 						?> </div>
 				</div>
 				<div class="upper_left">
@@ -107,20 +182,19 @@
 								$sql2 = mysqli_query( $conn, "Select flag FROM seat WHERE SeatNum=111" );
 								$res1 = mysqli_fetch_array( $sql1 );
 								$res2 = mysqli_fetch_array( $sql2 );
-								
-								
-								if ( $userRow['St_id' ] == $res1['St_id' ] ) {
-									$check=1;
+
+
+								if ( $userRow[ 'St_id' ] == $res1[ 'St_id' ] ) {
+									$check = 1;
 									print "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"111\">Release</button>
 									</form>";
-									
-								} elseif ( $res2[ 'flag' ] == 1) {
+
+								} elseif ( $res2[ 'flag' ] == 1 ) {
 									echo "<button class=\"button occu\" disabled>Booked</button>";
 								}
-								
-								elseif($check==1)
-								{
+
+								elseif ( $check == 1 ) {
 									echo "<button class=\"button occus\" disabled>Unavailable</button>";
 									/*echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\" >
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"111\" disabled>Release</button>
@@ -129,15 +203,13 @@
         							<button class=\"button button_divider1\" type=\"submit\" name=\"book\" value=\"111\" disabled>Book</button>
 									</form>";*/
 								}
-								
-								elseif($check==0) {
-									
-									
+
+								elseif ( $check == 0 ) {
 									echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"111\" disabled>Release</button>
 									</form>";
-									echo "<form action=\"myseat.php\" method=\"post\" style =\"float: left\">
-        							<button class=\"button button_divider1\" type=\"submit\" name=\"book\" value=\"111\" >Book</button>
+									echo "<form method=\"post\" style =\"float: left\" onclick=\"passData();\">
+        							<button class=\"button button_divider1\" type=\"button\" name=\"book\" id=\"book\" value=\"111\">Book</button>
 									</form>";
 								}
 
@@ -159,29 +231,29 @@
 								$res1 = mysqli_fetch_array( $sql1 );
 								$res2 = mysqli_fetch_array( $sql2 );
 
-								if ( $userRow['St_id' ] == $res1['St_id' ] ) {
-									$check=1;
+								if ( $userRow[ 'St_id' ] == $res1[ 'St_id' ] ) {
+									$check = 1;
 									print "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"112\">Release</button>
 									</form>";
-									
+
 								} elseif ( $res2[ 'flag' ] == 1 ) {
 									echo "<button class=\"button occu\" disabled>Booked</button>";
 								}
-								
-								elseif($check==1)
-								{
-									echo "<button class=\"button occus\" disabled>Unavailable</button>";/*
-									echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\" disabled>
-        							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"112\" disabled>Release</button>
-									</form>";
-									echo "<form action=\"myseat.php\" method=\"post\" style =\"float: left\" disabled>
-        							<button class=\"button button_divider1\" type=\"submit\" name=\"book\" value=\"112\" disabled>Book</button>
-									</form>";*/
+
+								elseif ( $check == 1 ) {
+									echo "<button class=\"button occus\" disabled>Unavailable</button>";
+									/*
+																		echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\" disabled>
+									        							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"112\" disabled>Release</button>
+																		</form>";
+																		echo "<form action=\"myseat.php\" method=\"post\" style =\"float: left\" disabled>
+									        							<button class=\"button button_divider1\" type=\"submit\" name=\"book\" value=\"112\" disabled>Book</button>
+																		</form>";*/
 								}
-								
-								elseif($check==0){
-									
+
+								elseif ( $check == 0 ) {
+
 									echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\" >
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"112\" disabled>Release</button>
 									</form>";
@@ -208,14 +280,13 @@
 									print "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"113\">Release</button>
 									</form>";
-									$check=1;
+									$check = 1;
 								} elseif ( $res2[ 'flag' ] == 1 ) {
 									echo "<button class=\"button occu\" disabled>Booked</button>";
 								}
-								elseif($check==1)
-								{
+								elseif ( $check == 1 ) {
 									echo "<button class=\"button occus\" disabled>Unavailable</button>";
-									
+
 									/*echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\" disabled>
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"112\" disabled>Release</button>
 									</form>";
@@ -223,7 +294,7 @@
         							<button class=\"button button_divider1\" type=\"submit\" name=\"book\" value=\"112\" disabled>Book</button>
 									</form>";*/
 								}
-								
+
 								else {
 									echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"113\" disabled>Release</button>
@@ -253,9 +324,8 @@
 								} elseif ( $res2[ 'flag' ] == 1 ) {
 									echo "<button class=\"button occu\" disabled>Booked</button>";
 								}
-								
-								elseif($check==1)
-								{
+
+								elseif ( $check == 1 ) {
 									echo "<button class=\"button occus\" disabled>Unavailable</button>";
 									/*echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"114\" disabled>Release</button>
@@ -264,7 +334,7 @@
         							<button class=\"button button_divider1\" type=\"submit\" name=\"book\" value=\"114\" disabled>Book</button>
 									</form>";*/
 								}
-								
+
 								else {
 									echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"114\" disabled>Release</button>
@@ -294,8 +364,7 @@
 								} elseif ( $res2[ 'flag' ] == 1 ) {
 									echo "<button class=\"button occu\" disabled>Booked</button>";
 								}
-								elseif($check==1)
-								{
+								elseif ( $check == 1 ) {
 									echo "<button class=\"button occus\" disabled>Unavailable</button>";
 									/*echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"115\" disabled>Release</button>
@@ -333,9 +402,8 @@
 								} elseif ( $res2[ 'flag' ] == 1 ) {
 									echo "<button class=\"button occu\" disabled>Booked</button>";
 								}
-								
-								elseif($check==1)
-								{
+
+								elseif ( $check == 1 ) {
 									echo "<button class=\"button occus\" disabled>Unavailable</button>";
 									/*echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"116\" disabled>Release</button>
@@ -344,7 +412,7 @@
         							<button class=\"button button_divider1\" type=\"submit\" name=\"book\" value=\"116\" disabled>Book</button>
 									</form>";*/
 								}
-								
+
 								else {
 									echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"116\" disabled>Release</button>
@@ -397,9 +465,8 @@
 								} elseif ( $res2[ 'flag' ] == 1 ) {
 									echo "<button class=\"button occu\" disabled>Booked</button>";
 								}
-								
-								elseif($check==1)
-								{
+
+								elseif ( $check == 1 ) {
 									echo "<button class=\"button occus\" disabled>Unavailable</button>";
 									/*echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"121\" disabled>Release</button>
@@ -408,7 +475,7 @@
         							<button class=\"button button_divider1\" type=\"submit\" name=\"book\" value=\"121\" disabled>Book</button>
 									</form>";*/
 								}
-								
+
 								else {
 									echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"121\" disabled>Release</button>
@@ -438,9 +505,8 @@
 								} elseif ( $res2[ 'flag' ] == 1 ) {
 									echo "<button class=\"button occu\" disabled>Booked</button>";
 								}
-								
-								elseif($check==1)
-								{
+
+								elseif ( $check == 1 ) {
 									echo "<button class=\"button occus\" disabled>Unavailable</button>";
 									/*echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"122\" disabled>Release</button>
@@ -449,7 +515,7 @@
         							<button class=\"button button_divider1\" type=\"submit\" name=\"book\" value=\"122\" disabled>Book</button>
 									</form>";*/
 								}
-								
+
 								else {
 									echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"122\" disabled>Release</button>
@@ -479,9 +545,8 @@
 								} elseif ( $res2[ 'flag' ] == 1 ) {
 									echo "<button class=\"button occu\" disabled>Booked</button>";
 								}
-								
-								elseif($check==1)
-								{
+
+								elseif ( $check == 1 ) {
 									echo "<button class=\"button occus\" disabled>Unavailable</button>";
 									/*echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"123\" disabled>Release</button>
@@ -490,7 +555,7 @@
         							<button class=\"button button_divider1\" type=\"submit\" name=\"book\" value=\"123\" diabled>Book</button>
 									</form>";*/
 								}
-								
+
 								else {
 									echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"123\" disabled>Release</button>
@@ -501,7 +566,7 @@
 								}
 
 								?>
-								
+
 							</div>
 						</div>
 						<div class="divide4">
@@ -521,9 +586,8 @@
 								} elseif ( $res2[ 'flag' ] == 1 ) {
 									echo "<button class=\"button occu\" disabled>Booked</button>";
 								}
-								
-								elseif($check==1)
-								{
+
+								elseif ( $check == 1 ) {
 									echo "<button class=\"button occus\" disabled>Unavailable</button>";
 									/*echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"124\" disabled>Release</button>
@@ -532,7 +596,7 @@
         							<button class=\"button button_divider1\" type=\"submit\" name=\"book\" value=\"124\" disabled>Book</button>
 									</form>";*/
 								}
-								
+
 								else {
 									echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"124\" disabled>Release</button>
@@ -562,9 +626,8 @@
 								} elseif ( $res2[ 'flag' ] == 1 ) {
 									echo "<button class=\"button occu\" disabled>Booked</button>";
 								}
-								
-								elseif($check==1)
-								{
+
+								elseif ( $check == 1 ) {
 									echo "<button class=\"button occus\" disabled>Unavailable</button>";
 									/*echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"125\" disabled>Release</button>
@@ -573,7 +636,7 @@
         							<button class=\"button button_divider1\" type=\"submit\" name=\"book\" value=\"125\" disabled>Book</button>
 									</form>";*/
 								}
-								
+
 								else {
 									echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"125\" disabled>Release</button>
@@ -603,9 +666,8 @@
 								} elseif ( $res2[ 'flag' ] == 1 ) {
 									echo "<button class=\"button occu\" disabled>Booked</button>";
 								}
-								
-								elseif($check==1)
-								{
+
+								elseif ( $check == 1 ) {
 									echo "<button class=\"button occus\" disabled>Unavailable</button>";
 									/*echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"126\" disabled>Release</button>
@@ -614,7 +676,7 @@
         							<button class=\"button button_divider1\" type=\"submit\" name=\"book\" value=\"126\" disabled>Book</button>
 									</form>";*/
 								}
-								
+
 								else {
 									echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"126\" disabled>Release</button>
@@ -665,9 +727,8 @@
 								} elseif ( $res2[ 'flag' ] == 1 ) {
 									echo "<button class=\"button occu\" disabled>Booked</button>";
 								}
-								
-								elseif($check==1)
-								{
+
+								elseif ( $check == 1 ) {
 									echo "<button class=\"button occus\" disabled>Unavailable</button>";
 									/*echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"131\" disabled>Release</button>
@@ -676,7 +737,7 @@
         							<button class=\"button button_divider1\" type=\"submit\" name=\"book\" value=\"131\" disabled>Book</button>
 									</form>";*/
 								}
-								
+
 								else {
 									echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"131\" disabled>Release</button>
@@ -706,9 +767,8 @@
 								} elseif ( $res2[ 'flag' ] == 1 ) {
 									echo "<button class=\"button occu\" disabled>Booked</button>";
 								}
-								
-								elseif($check==1)
-								{
+
+								elseif ( $check == 1 ) {
 									echo "<button class=\"button occus\" disabled>Unavailable</button>";
 									/*echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"132\" disabled>Release</button>
@@ -717,7 +777,7 @@
         							<button class=\"button button_divider1\" type=\"submit\" name=\"book\" value=\"132\" disabled>Book</button>
 									</form>";*/
 								}
-								
+
 								else {
 									echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"132\" disabled>Release</button>
@@ -747,9 +807,8 @@
 								} elseif ( $res2[ 'flag' ] == 1 ) {
 									echo "<button class=\"button occu\" disabled>Booked</button>";
 								}
-								
-								elseif($check==1)
-								{
+
+								elseif ( $check == 1 ) {
 									echo "<button class=\"button occus\" disabled>Unavailable</button>";
 									/*echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"133\" disabled>Release</button>
@@ -758,7 +817,7 @@
         							<button class=\"button button_divider1\" type=\"submit\" name=\"book\" value=\"133\" disabled>Book</button>
 									</form>";*/
 								}
-								
+
 								else {
 									echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"133\" disabled>Release</button>
@@ -788,9 +847,8 @@
 								} elseif ( $res2[ 'flag' ] == 1 ) {
 									echo "<button class=\"button occu\" disabled>Booked</button>";
 								}
-								
-								elseif($check==1)
-								{
+
+								elseif ( $check == 1 ) {
 									echo "<button class=\"button occus\" disabled>Unavailable</button>";
 									/*echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"134\" disabled>Release</button>
@@ -799,7 +857,7 @@
         							<button class=\"button button_divider1\" type=\"submit\" name=\"book\" value=\"134\" disabled>Book</button>
 									</form>";*/
 								}
-								
+
 								else {
 									echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"134\" disabled>Release</button>
@@ -829,9 +887,8 @@
 								} elseif ( $res2[ 'flag' ] == 1 ) {
 									echo "<button class=\"button occu\" disabled>Booked</button>";
 								}
-								
-								elseif($check==1)
-								{
+
+								elseif ( $check == 1 ) {
 									echo "<button class=\"button occus\" disabled>Unavailable</button>";
 									/*echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"135\" disabled>Release</button>
@@ -840,7 +897,7 @@
         							<button class=\"button button_divider1\" type=\"submit\" name=\"book\" value=\"135\">Book</button>
 									</form>";*/
 								}
-								
+
 								else {
 									echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"135\" disabled>Release</button>
@@ -870,9 +927,8 @@
 								} elseif ( $res2[ 'flag' ] == 1 ) {
 									echo "<button class=\"button occu\" disabled>Booked</button>";
 								}
-								
-								elseif($check==1)
-								{
+
+								elseif ( $check == 1 ) {
 									echo "<button class=\"button occus\" disabled>Unavailable</button>";
 									/*echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"136\" disabled>Release</button>
@@ -881,7 +937,7 @@
         							<button class=\"button button_divider1\" type=\"submit\" name=\"book\" value=\"136\" disabled>Book</button>
 									</form>";*/
 								}
-								
+
 								else {
 									echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"136\" disabled>Release</button>
@@ -896,33 +952,33 @@
 						</div>
 					</div>
 				</div>
-				
+
 			</div>
 
 
 			<div class="upper">
 				<div class="details">
 					<div class="details1">Floor: 2</div>
-					<div class="details2">Total Student: <?php
-						$std=mysqli_query($conn,"SELECT count(*)FROM current_std Where floor_num=2");
-						$std2=mysqli_fetch_array($std);
-						print $std2[0];
-						?></div>
+					<div class="details2">Total Student:
+						<?php
+						$std = mysqli_query( $conn, "SELECT count(*)FROM current_std Where floor_num=2" );
+						$std2 = mysqli_fetch_array( $std );
+						print $std2[ 0 ];
+						?>
+					</div>
 					<div class="details3">Total Seat: 18</div>
-					<div class="details4">Available Seat:<?php
-						 	$total=18;
-						    $res=mysqli_query($conn,"SELECT SUM(occupy) AS occ FROM book_table WHERE floor_num=2 AND occupy=0");
-							$fin=mysqli_fetch_array($res);
-							$sum=$std2[0]+$fin[0];
-							$seat=$total-$std2[0];
-							if($seat<1)
-							{
-								print "0";
-							}
-							else
-							{
-								print $seat;
-							}	
+					<div class="details4">Available Seat:
+						<?php
+						$total = 18;
+						$res = mysqli_query( $conn, "SELECT SUM(occupy) AS occ FROM book_table WHERE floor_num=2 AND occupy=0" );
+						$fin = mysqli_fetch_array( $res );
+						$sum = $std2[ 0 ] + $fin[ 0 ];
+						$seat = $total - $std2[ 0 ];
+						if ( $seat < 1 ) {
+							print "0";
+						} else {
+							print $seat;
+						}
 						?> </div>
 				</div>
 				<div class="upper_left">
@@ -960,9 +1016,8 @@
 								} elseif ( $res2[ 'flag' ] == 1 ) {
 									echo "<button class=\"button occu\" disabled>Booked</button>";
 								}
-								
-								elseif($check==1)
-								{
+
+								elseif ( $check == 1 ) {
 									echo "<button class=\"button occus\" disabled>Unavailable</button>";
 									/*echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"211\" disabled>Release</button>
@@ -971,7 +1026,7 @@
         							<button class=\"button button_divider1\" type=\"submit\" name=\"book\" value=\"211\" disabled>Book</button>
 									</form>";*/
 								}
-								
+
 								else {
 									echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"211\" disabled>Release</button>
@@ -1001,9 +1056,8 @@
 								} elseif ( $res2[ 'flag' ] == 1 ) {
 									echo "<button class=\"button occu\" disabled>Booked</button>";
 								}
-								
-								elseif($check==1)
-								{
+
+								elseif ( $check == 1 ) {
 									echo "<button class=\"button occus\" disabled>Unavailable</button>";
 									/*echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"212\" disabled>Release</button>
@@ -1012,7 +1066,7 @@
         							<button class=\"button button_divider1\" type=\"submit\" name=\"book\" value=\"212\">Book</button>
 									</form>";*/
 								}
-								
+
 								else {
 									echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"212\" disabled>Release</button>
@@ -1042,9 +1096,8 @@
 								} elseif ( $res2[ 'flag' ] == 1 ) {
 									echo "<button class=\"button occu\" disabled>Booked</button>";
 								}
-								
-								elseif($check==1)
-								{
+
+								elseif ( $check == 1 ) {
 									echo "<button class=\"button occus\" disabled>Unavailable</button>";
 									/*echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"213\" disabled>Release</button>
@@ -1053,7 +1106,7 @@
         							<button class=\"button button_divider1\" type=\"submit\" name=\"book\" value=\"213\" disabled>Book</button>
 									</form>";*/
 								}
-								
+
 								else {
 									echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"213\" disabled>Release</button>
@@ -1083,9 +1136,8 @@
 								} elseif ( $res2[ 'flag' ] == 1 ) {
 									echo "<button class=\"button occu\" disabled>Booked</button>";
 								}
-								
-								elseif($check==1)
-								{
+
+								elseif ( $check == 1 ) {
 									echo "<button class=\"button occus\" disabled>Unavailable</button>";
 									/*echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"214\" disabled>Release</button>
@@ -1094,7 +1146,7 @@
         							<button class=\"button button_divider1\" type=\"submit\" name=\"book\" value=\"214\" disabled>Book</button>
 									</form>";*/
 								}
-								
+
 								else {
 									echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"214\" disabled>Release</button>
@@ -1124,9 +1176,8 @@
 								} elseif ( $res2[ 'flag' ] == 1 ) {
 									echo "<button class=\"button occu\" disabled>Booked</button>";
 								}
-								
-								elseif($check==1)
-								{
+
+								elseif ( $check == 1 ) {
 									echo "<button class=\"button occus\" disabled>Unavailable</button>";
 									/*echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"215\" disabled>Release</button>
@@ -1135,7 +1186,7 @@
         							<button class=\"button button_divider1\" type=\"submit\" name=\"book\" value=\"215\" disabled>Book</button>
 									</form>";*/
 								}
-								
+
 								else {
 									echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"215\" disabled>Release</button>
@@ -1165,9 +1216,8 @@
 								} elseif ( $res2[ 'flag' ] == 1 ) {
 									echo "<button class=\"button occu\" disabled>Booked</button>";
 								}
-								
-								elseif($check==1)
-								{
+
+								elseif ( $check == 1 ) {
 									echo "<button class=\"button occus\" disabled>Unavailable</button>";
 									/*echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"216\" disabled>Release</button>
@@ -1176,7 +1226,7 @@
         							<button class=\"button button_divider1\" type=\"submit\" name=\"book\" value=\"216\" disabled>Book</button>
 									</form>";*/
 								}
-								
+
 								else {
 									echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"216\" disabled>Release</button>
@@ -1229,9 +1279,8 @@
 								} elseif ( $res2[ 'flag' ] == 1 ) {
 									echo "<button class=\"button occu\" disabled>Booked</button>";
 								}
-								
-								elseif($check==1)
-								{
+
+								elseif ( $check == 1 ) {
 									echo "<button class=\"button occus\" disabled>Unavailable</button>";
 									/*echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"221\" disabled>Release</button>
@@ -1240,7 +1289,7 @@
         							<button class=\"button button_divider1\" type=\"submit\" name=\"book\" value=\"221\" disabled>Book</button>
 									</form>";*/
 								}
-								
+
 								else {
 									echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"221\" disabled>Release</button>
@@ -1270,9 +1319,8 @@
 								} elseif ( $res2[ 'flag' ] == 1 ) {
 									echo "<button class=\"button occu\" disabled>Booked</button>";
 								}
-								
-								elseif($check==1)
-								{
+
+								elseif ( $check == 1 ) {
 									echo "<button class=\"button occus\" disabled>Unavailable</button>";
 									/*echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"222\" disabled>Release</button>
@@ -1281,7 +1329,7 @@
         							<button class=\"button button_divider1\" type=\"submit\" name=\"book\" value=\"222\" disabled>Book</button>
 									</form>";*/
 								}
-								
+
 								else {
 									echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"222\" disabled>Release</button>
@@ -1311,9 +1359,8 @@
 								} elseif ( $res2[ 'flag' ] == 1 ) {
 									echo "<button class=\"button occu\" disabled>Booked</button>";
 								}
-								
-								elseif($check==1)
-								{
+
+								elseif ( $check == 1 ) {
 									echo "<button class=\"button occus\" disabled>Unavailable</button>";
 									/*echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"223\" disabled>Release</button>
@@ -1322,7 +1369,7 @@
         							<button class=\"button button_divider1\" type=\"submit\" name=\"book\" value=\"223\" disabled>Book</button>
 									</form>";*/
 								}
-								
+
 								else {
 									echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"223\" disabled>Release</button>
@@ -1352,9 +1399,8 @@
 								} elseif ( $res2[ 'flag' ] == 1 ) {
 									echo "<button class=\"button occu\" disabled>Booked</button>";
 								}
-								
-								elseif($check==1)
-								{
+
+								elseif ( $check == 1 ) {
 									echo "<button class=\"button occus\" disabled>Unavailable</button>";
 									/*echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"224\" disabled>Release</button>
@@ -1363,7 +1409,7 @@
         							<button class=\"button button_divider1\" type=\"submit\" name=\"book\" value=\"224\" disabled>Book</button>
 									</form>";*/
 								}
-								
+
 								else {
 									echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"224\" disabled>Release</button>
@@ -1393,9 +1439,8 @@
 								} elseif ( $res2[ 'flag' ] == 1 ) {
 									echo "<button class=\"button occu\" disabled>Booked</button>";
 								}
-								
-								elseif($check==1)
-								{
+
+								elseif ( $check == 1 ) {
 									echo "<button class=\"button occus\" disabled>Unavailable</button>";
 									/*echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"225\" disabled>Release</button>
@@ -1404,7 +1449,7 @@
         							<button class=\"button button_divider1\" type=\"submit\" name=\"book\" value=\"225\" disabled>Book</button>
 									</form>";*/
 								}
-								
+
 								else {
 									echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"225\" disabled>Release</button>
@@ -1434,9 +1479,8 @@
 								} elseif ( $res2[ 'flag' ] == 1 ) {
 									echo "<button class=\"button occu\" disabled>Booked</button>";
 								}
-								
-								elseif($check==1)
-								{
+
+								elseif ( $check == 1 ) {
 									echo "<button class=\"button occus\" disabled>Unavailable</button>";
 									/*echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"226\" disabled>Release</button>
@@ -1445,7 +1489,7 @@
         							<button class=\"button button_divider1\" type=\"submit\" name=\"book\" value=\"226\" disabled>Book</button>
 									</form>";*/
 								}
-								
+
 								else {
 									echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"226\" disabled>Release</button>
@@ -1497,9 +1541,8 @@
 								} elseif ( $res2[ 'flag' ] == 1 ) {
 									echo "<button class=\"button occu\" disabled>Booked</button>";
 								}
-								
-								elseif($check==1)
-								{
+
+								elseif ( $check == 1 ) {
 									echo "<button class=\"button occus\" disabled>Unavailable</button>";
 									/*echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"231\" disabled>Release</button>
@@ -1508,7 +1551,7 @@
         							<button class=\"button button_divider1\" type=\"submit\" name=\"book\" value=\"231\" disabled>Book</button>
 									</form>";*/
 								}
-								
+
 								else {
 									echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"231\" disabled>Release</button>
@@ -1538,9 +1581,8 @@
 								} elseif ( $res2[ 'flag' ] == 1 ) {
 									echo "<button class=\"button occu\" disabled>Booked</button>";
 								}
-								
-								elseif($check==1)
-								{
+
+								elseif ( $check == 1 ) {
 									echo "<button class=\"button occus\" disabled>Unavailable</button>";
 									/*echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"232\" disabled>Release</button>
@@ -1549,7 +1591,7 @@
         							<button class=\"button button_divider1\" type=\"submit\" name=\"book\" value=\"232\" disabled>Book</button>
 									</form>";*/
 								}
-								
+
 								else {
 									echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"232\" disabled>Release</button>
@@ -1579,9 +1621,8 @@
 								} elseif ( $res2[ 'flag' ] == 1 ) {
 									echo "<button class=\"button occu\" disabled>Booked</button>";
 								}
-								
-								elseif($check==1)
-								{
+
+								elseif ( $check == 1 ) {
 									echo "<button class=\"button occus\" disabled>Unavailable</button>";
 									/*echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"233\" disabled>Release</button>
@@ -1590,7 +1631,7 @@
         							<button class=\"button button_divider1\" type=\"submit\" name=\"book\" value=\"233\" disabled>Book</button>
 									</form>";*/
 								}
-								
+
 								else {
 									echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"233\" disabled>Release</button>
@@ -1620,9 +1661,8 @@
 								} elseif ( $res2[ 'flag' ] == 1 ) {
 									echo "<button class=\"button occu\" disabled>Booked</button>";
 								}
-								
-								elseif($check==1)
-								{
+
+								elseif ( $check == 1 ) {
 									echo "<button class=\"button occus\" disabled>Unavailable</button>";
 									/*echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"234\" disabled>Release</button>
@@ -1631,7 +1671,7 @@
         							<button class=\"button button_divider1\" type=\"submit\" name=\"book\" value=\"234\" disabled>Book</button>
 									</form>";*/
 								}
-								
+
 								else {
 									echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"234\" disabled>Release</button>
@@ -1661,9 +1701,8 @@
 								} elseif ( $res2[ 'flag' ] == 1 ) {
 									echo "<button class=\"button occu\" disabled>Booked</button>";
 								}
-								
-								elseif($check==1)
-								{
+
+								elseif ( $check == 1 ) {
 									echo "<button class=\"button occus\" disabled>Unavailable</button>";
 									/*echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"235\" disabled>Release</button>
@@ -1672,7 +1711,7 @@
         							<button class=\"button button_divider1\" type=\"submit\" name=\"book\" value=\"235\" disabled>Book</button>
 									</form>";*/
 								}
-								
+
 								else {
 									echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"235\" disabled>Release</button>
@@ -1702,9 +1741,8 @@
 								} elseif ( $res2[ 'flag' ] == 1 ) {
 									echo "<button class=\"button occu\" disabled>Booked</button>";
 								}
-								
-								elseif($check==1)
-								{
+
+								elseif ( $check == 1 ) {
 									echo "<button class=\"button occus\" disabled>Unavailable</button>";
 									/*echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"236\" disabled>Release</button>
@@ -1713,7 +1751,7 @@
         							<button class=\"button button_divider1\" type=\"submit\" name=\"book\" value=\"236\" disabled>Book</button>
 									</form>";*/
 								}
-									
+
 								else {
 									echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"236\" disabled>Release</button>
@@ -1728,32 +1766,32 @@
 						</div>
 					</div>
 				</div>
-				
+
 			</div>
 
 			<div class="upper">
 				<div class="details">
 					<div class="details1">Floor: 3</div>
-					<div class="details2">Total Student: <?php
-						$std=mysqli_query($conn,"SELECT count(*)FROM current_std Where floor_num=3");
-						$std2=mysqli_fetch_array($std);
-						print $std2[0];
-						?></div>
+					<div class="details2">Total Student:
+						<?php
+						$std = mysqli_query( $conn, "SELECT count(*)FROM current_std Where floor_num=3" );
+						$std2 = mysqli_fetch_array( $std );
+						print $std2[ 0 ];
+						?>
+					</div>
 					<div class="details3">Total Seat: 18</div>
-					<div class="details4">Available Seat:<?php
-						 	$total=18;
-						    $res=mysqli_query($conn,"SELECT SUM(occupy) AS occ FROM book_table WHERE floor_num=3 AND occupy=0");
-							$fin=mysqli_fetch_array($res);
-							$sum=$std2[0]+$fin[0];
-							$seat=$total-$std2[0];
-							if($seat<1)
-							{
-								print "0";
-							}
-							else
-							{
-								print $seat;
-							}	
+					<div class="details4">Available Seat:
+						<?php
+						$total = 18;
+						$res = mysqli_query( $conn, "SELECT SUM(occupy) AS occ FROM book_table WHERE floor_num=3 AND occupy=0" );
+						$fin = mysqli_fetch_array( $res );
+						$sum = $std2[ 0 ] + $fin[ 0 ];
+						$seat = $total - $std2[ 0 ];
+						if ( $seat < 1 ) {
+							print "0";
+						} else {
+							print $seat;
+						}
 						?> </div>
 				</div>
 				<div class="upper_left">
@@ -1791,9 +1829,8 @@
 								} elseif ( $res2[ 'flag' ] == 1 ) {
 									echo "<button class=\"button occu\" disabled>Booked</button>";
 								}
-								
-								elseif($check==1)
-								{
+
+								elseif ( $check == 1 ) {
 									echo "<button class=\"button occus\" disabled>Unavailable</button>";
 									/*echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"311\" disabled>Release</button>
@@ -1802,7 +1839,7 @@
         							<button class=\"button button_divider1\" type=\"submit\" name=\"book\" value=\"311\" disabled>Book</button>
 									</form>";*/
 								}
-								
+
 								else {
 									echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"311\" disabled>Release</button>
@@ -1832,9 +1869,8 @@
 								} elseif ( $res2[ 'flag' ] == 1 ) {
 									echo "<button class=\"button occu\" disabled>Booked</button>";
 								}
-								
-								elseif($check==1)
-								{
+
+								elseif ( $check == 1 ) {
 									echo "<button class=\"button occus\" disabled>Unavailable</button>";
 									/*echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"312\" disabled>Release</button>
@@ -1843,7 +1879,7 @@
         							<button class=\"button button_divider1\" type=\"submit\" name=\"book\" value=\"312\" disabled>Book</button>
 									</form>";*/
 								}
-								
+
 								else {
 									echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"312\" disabled>Release</button>
@@ -1873,9 +1909,8 @@
 								} elseif ( $res2[ 'flag' ] == 1 ) {
 									echo "<button class=\"button occu\" disabled>Booked</button>";
 								}
-								
-								elseif($check==1)
-								{
+
+								elseif ( $check == 1 ) {
 									echo "<button class=\"button occus\" disabled>Unavailable</button>";
 									/*echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"313\" disabled>Release</button>
@@ -1884,7 +1919,7 @@
         							<button class=\"button button_divider1\" type=\"submit\" name=\"book\" value=\"313\" disabled>Book</button>
 									</form>";*/
 								}
-								
+
 								else {
 									echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"313\" disabled>Release</button>
@@ -1914,9 +1949,8 @@
 								} elseif ( $res2[ 'flag' ] == 1 ) {
 									echo "<button class=\"button occu\" disabled>Booked</button>";
 								}
-								
-								elseif($check==1)
-								{
+
+								elseif ( $check == 1 ) {
 									echo "<button class=\"button occus\" disabled>Unavailable</button>";
 									/*echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"314\" disabled>Release</button>
@@ -1925,7 +1959,7 @@
         							<button class=\"button button_divider1\" type=\"submit\" name=\"book\" value=\"314\" disabled>Book</button>
 									</form>";*/
 								}
-								
+
 								else {
 									echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"314\" disabled>Release</button>
@@ -1955,9 +1989,8 @@
 								} elseif ( $res2[ 'flag' ] == 1 ) {
 									echo "<button class=\"button occu\" disabled>Booked</button>";
 								}
-								
-								elseif($check==1)
-								{
+
+								elseif ( $check == 1 ) {
 									echo "<button class=\"button occus\" disabled>Unavailable</button>";
 									/*echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"315\" disabled>Release</button>
@@ -1966,7 +1999,7 @@
         							<button class=\"button button_divider1\" type=\"submit\" name=\"book\" value=\"315\" disabled>Book</button>
 									</form>";*/
 								}
-								
+
 								else {
 									echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"315\" disabled>Release</button>
@@ -1996,9 +2029,8 @@
 								} elseif ( $res2[ 'flag' ] == 1 ) {
 									echo "<button class=\"button occu\" disabled>Booked</button>";
 								}
-								
-								elseif($check==1)
-								{
+
+								elseif ( $check == 1 ) {
 									echo "<button class=\"button occus\" disabled>Unavailable</button>";
 									/*echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"316\" disabled>Release</button>
@@ -2007,7 +2039,7 @@
         							<button class=\"button button_divider1\" type=\"submit\" name=\"book\" value=\"316\" disabled>Book</button>
 									</form>";*/
 								}
-								
+
 								else {
 									echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"316\" disabled>Release</button>
@@ -2060,9 +2092,8 @@
 								} elseif ( $res2[ 'flag' ] == 1 ) {
 									echo "<button class=\"button occu\" disabled>Booked</button>";
 								}
-								
-								elseif($check==1)
-								{
+
+								elseif ( $check == 1 ) {
 									echo "<button class=\"button occus\" disabled>Unavailable</button>";
 									/*echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"321\" disabled>Release</button>
@@ -2071,7 +2102,7 @@
         							<button class=\"button button_divider1\" type=\"submit\" name=\"book\" value=\"321\" disabled>Book</button>
 									</form>";*/
 								}
-								
+
 								else {
 									echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"321\" disabled>Release</button>
@@ -2101,9 +2132,8 @@
 								} elseif ( $res2[ 'flag' ] == 1 ) {
 									echo "<button class=\"button occu\" disabled>Booked</button>";
 								}
-								
-								elseif($check==1)
-								{
+
+								elseif ( $check == 1 ) {
 									echo "<button class=\"button occus\" disabled>Unavailable</button>";
 									/*echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"322\" disabled>Release</button>
@@ -2112,7 +2142,7 @@
         							<button class=\"button button_divider1\" type=\"submit\" name=\"book\" value=\"322\" disabled>Book</button>
 									</form>";*/
 								}
-								
+
 								else {
 									echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"322\" disabled>Release</button>
@@ -2142,9 +2172,8 @@
 								} elseif ( $res2[ 'flag' ] == 1 ) {
 									echo "<button class=\"button occu\" disabled>Booked</button>";
 								}
-								
-								elseif($check==1)
-								{
+
+								elseif ( $check == 1 ) {
 									echo "<button class=\"button occus\" disabled>Unavailable</button>";
 									/*echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"323\" disabled>Release</button>
@@ -2153,7 +2182,7 @@
         							<button class=\"button button_divider1\" type=\"submit\" name=\"book\" value=\"323\" disabled>Book</button>
 									</form>";*/
 								}
-								
+
 								else {
 									echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"323\" disabled>Release</button>
@@ -2183,9 +2212,8 @@
 								} elseif ( $res2[ 'flag' ] == 1 ) {
 									echo "<button class=\"button occu\" disabled>Booked</button>";
 								}
-								
-								elseif($check==1)
-								{
+
+								elseif ( $check == 1 ) {
 									echo "<button class=\"button occus\" disabled>Unavailable</button>";
 									/*echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"324\" disabled>Release</button>
@@ -2194,7 +2222,7 @@
         							<button class=\"button button_divider1\" type=\"submit\" name=\"book\" value=\"324\" disabled>Book</button>
 									</form>";*/
 								}
-								
+
 								else {
 									echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"324\" disabled>Release</button>
@@ -2224,9 +2252,8 @@
 								} elseif ( $res2[ 'flag' ] == 1 ) {
 									echo "<button class=\"button occu\" disabled>Booked</button>";
 								}
-								
-								elseif($check==1)
-								{
+
+								elseif ( $check == 1 ) {
 									echo "<button class=\"button occus\" disabled>Unavailable</button>";
 									/*echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"325\" disabled>Release</button>
@@ -2235,7 +2262,7 @@
         							<button class=\"button button_divider1\" type=\"submit\" name=\"book\" value=\"325\" disabled>Book</button>
 									</form>";*/
 								}
-								
+
 								else {
 									echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"325\" disabled>Release</button>
@@ -2265,9 +2292,8 @@
 								} elseif ( $res2[ 'flag' ] == 1 ) {
 									echo "<button class=\"button occu\" disabled>Booked</button>";
 								}
-								
-								elseif($check==1)
-								{
+
+								elseif ( $check == 1 ) {
 									echo "<button class=\"button occus\" disabled>Unavailable</button>";
 									/*echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"326\" disabled>Release</button>
@@ -2276,7 +2302,7 @@
         							<button class=\"button button_divider1\" type=\"submit\" name=\"book\" value=\"326\" disabled>Book</button>
 									</form>";*/
 								}
-								
+
 								else {
 									echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"326\" disabled>Release</button>
@@ -2327,9 +2353,8 @@
 								} elseif ( $res2[ 'flag' ] == 1 ) {
 									echo "<button class=\"button occu\" disabled>Booked</button>";
 								}
-								
-								elseif($check==1)
-								{
+
+								elseif ( $check == 1 ) {
 									echo "<button class=\"button occus\" disabled>Unavailable</button>";
 									/*echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"331\" disabled>Release</button>
@@ -2338,7 +2363,7 @@
         							<button class=\"button button_divider1\" type=\"submit\" name=\"book\" value=\"331\" disabled>Book</button>
 									</form>";*/
 								}
-								
+
 								else {
 									echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"331\" disabled>Release</button>
@@ -2368,9 +2393,8 @@
 								} elseif ( $res2[ 'flag' ] == 1 ) {
 									echo "<button class=\"button occu\" disabled>Booked</button>";
 								}
-								
-								elseif($check==1)
-								{
+
+								elseif ( $check == 1 ) {
 									echo "<button class=\"button occus\" disabled>Unavailable</button>";
 									/*echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"332\" disabled>Release</button>
@@ -2379,7 +2403,7 @@
         							<button class=\"button button_divider1\" type=\"submit\" name=\"book\" value=\"332\" disabled>Book</button>
 									</form>";*/
 								}
-								
+
 								else {
 									echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"332\" disabled>Release</button>
@@ -2409,9 +2433,8 @@
 								} elseif ( $res2[ 'flag' ] == 1 ) {
 									echo "<button class=\"button occu\" disabled>Booked</button>";
 								}
-								
-								elseif($check==1)
-								{
+
+								elseif ( $check == 1 ) {
 									echo "<button class=\"button occus\" disabled>Unavailable</button>";
 									/*echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"333\" disabled>Release</button>
@@ -2420,7 +2443,7 @@
         							<button class=\"button button_divider1\" type=\"submit\" name=\"book\" value=\"333\" disabled>Book</button>
 									</form>";*/
 								}
-								
+
 								else {
 									echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"333\" disabled>Release</button>
@@ -2450,9 +2473,8 @@
 								} elseif ( $res2[ 'flag' ] == 1 ) {
 									echo "<button class=\"button occu\" disabled>Booked</button>";
 								}
-								
-								elseif($check==1)
-								{
+
+								elseif ( $check == 1 ) {
 									echo "<button class=\"button occus\" disabled>Unavailable</button>";
 									/*echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"334\" disabled>Release</button>
@@ -2461,7 +2483,7 @@
         							<button class=\"button button_divider1\" type=\"submit\" name=\"book\" value=\"334\" disabled>Book</button>
 									</form>";*/
 								}
-								
+
 								else {
 									echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"334\" disabled>Release</button>
@@ -2491,9 +2513,8 @@
 								} elseif ( $res2[ 'flag' ] == 1 ) {
 									echo "<button class=\"button occu\" disabled>Booked</button>";
 								}
-								
-								elseif($check==1)
-								{
+
+								elseif ( $check == 1 ) {
 									echo "<button class=\"button occus\" disabled>Unavailable</button>";
 									/*echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"335\" disabled>Release</button>
@@ -2502,7 +2523,7 @@
         							<button class=\"button button_divider1\" type=\"submit\" name=\"book\" value=\"335\" disabled>Book</button>
 									</form>";*/
 								}
-								
+
 								else {
 									echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"335\" disabled>Release</button>
@@ -2532,9 +2553,8 @@
 								} elseif ( $res2[ 'flag' ] == 1 ) {
 									echo "<button class=\"button occu\" disabled>Booked</button>";
 								}
-								
-								elseif($check==1)
-								{
+
+								elseif ( $check == 1 ) {
 									echo "<button class=\"button occus\" disabled>Unavailable</button>";
 									/*echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"336\" disabled>Release</button>
@@ -2543,7 +2563,7 @@
         							<button class=\"button button_divider1\" type=\"submit\" name=\"book\" value=\"336\" disabled>Book</button>
 									</form>";*/
 								}
-								
+
 								else {
 									echo "<form action=\"releaseS.php\" method=\"post\" style =\"float: right\">
         							<button class=\"button button_divider\" type=\"submit\" name=\"release\" value=\"336\" disabled>Release</button>
@@ -2558,7 +2578,7 @@
 						</div>
 					</div>
 				</div>
-				
+
 			</div>
 			<!--End of upper div-->
 			<!--End of Lower div-->
