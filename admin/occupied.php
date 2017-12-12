@@ -65,7 +65,7 @@ $userRow=mysqli_fetch_array($res);
 								?>
 
 		
-		</div> 	
+		</div> </div>	
 		 <div class="Footer"></div>							                   <!--End of main container-->
 
 	</body>

@@ -66,10 +66,10 @@
 					<div class="details3">Total Seat: 18</div>
 					<div class="details4">Available Seat:<?php
 						 	$total=18;
-						    $res=mysqli_query($conn,"SELECT SUM(occupy) AS occ FROM book_table WHERE floor_num=1 AND occupy=0");
+						    $res=mysqli_query($conn,"SELECT count(*) FROM book_table WHERE floor_num=1 AND occupy=0");
 							$fin=mysqli_fetch_array($res);
 							$sum=$std2[0]+$fin[0];
-							$seat=$total-$std2[0];
+							$seat=$total-$sum;
 							if($seat<1)
 							{
 								print "0";
@@ -911,10 +911,10 @@
 					<div class="details3">Total Seat: 18</div>
 					<div class="details4">Available Seat:<?php
 						 	$total=18;
-						    $res=mysqli_query($conn,"SELECT SUM(occupy) AS occ FROM book_table WHERE floor_num=2 AND occupy=0");
+						    $res=mysqli_query($conn,"SELECT count(*) FROM book_table WHERE floor_num=2 AND occupy=0");
 							$fin=mysqli_fetch_array($res);
 							$sum=$std2[0]+$fin[0];
-							$seat=$total-$std2[0];
+							$seat=$total-$sum;
 							if($seat<1)
 							{
 								print "0";
@@ -1742,10 +1742,10 @@
 					<div class="details3">Total Seat: 18</div>
 					<div class="details4">Available Seat:<?php
 						 	$total=18;
-						    $res=mysqli_query($conn,"SELECT SUM(occupy) AS occ FROM book_table WHERE floor_num=3 AND occupy=0");
+						    $res=mysqli_query($conn,"SELECT count(*) FROM book_table WHERE floor_num=3 AND occupy=0");
 							$fin=mysqli_fetch_array($res);
 							$sum=$std2[0]+$fin[0];
-							$seat=$total-$std2[0];
+							$seat=$total-$sum;
 							if($seat<1)
 							{
 								print "0";
